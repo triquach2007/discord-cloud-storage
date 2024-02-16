@@ -13,7 +13,7 @@ logging.basicConfig(
 )
 
 from bot import Upload_Bot, Download_Bot
-from constant import TOKEN
+from SECRET import TOKEN
 import discord
 
 if __name__ == "__main__":

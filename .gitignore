@@ -2,4 +2,5 @@ venv/
 .vscode/
 main/download_buffer/
 main/upload_buffer/
+main/SECRET.py
 debug.log
