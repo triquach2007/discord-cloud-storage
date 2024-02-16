@@ -20,3 +20,11 @@ def load_entry(file_name):
     with open(DB_PATH, "r") as f:
         d = json.load(f)
     return list(filter(lambda file_dict: file_dict["file_name"] == file_name, d["files"]))[0]
+
+def remove_entry(file_name):
+    with open(DB_PATH, "r") as f:
+        d = json.load(f)
+        
+    with open(DB_PATH, "w") as f:
+        d["files"] = [x for x in d["files"] if not (file_name == x.get('file_name'))]
+        json.dump(d, f, indent=4)

@@ -15,7 +15,6 @@ class Upload_Bot(discord.Client):
         channel = self.get_channel(1207612400971419688)
         for file_number, file in enumerate(load_up_files()):
             logging.info(f"File #{file_number}")
-            channel.send(os.path.basename(file))
 
             messages_id = []
             for splitted_file_number, splitted_file in enumerate(split_up_file(file)):
@@ -54,9 +53,32 @@ class Download_Bot(discord.Client):
         while os.path.exists(os.path.join(DOWNLOAD_PATH, save_file_name)):
             save_file_name = f"{os.path.splitext(self.download_file_name)[0]} ({i}){os.path.splitext(self.download_file_name)[1]}"
             i+=1
-            
+
         with open(os.path.join(DOWNLOAD_PATH, save_file_name), "wb") as f:
             f.write(join_data())
         
         delete_file_in_download_buffer()
+        await self.close()
+
+class Remove_Bot(discord.Client):
+    def __init__(self, file_name:str, *, intents: discord.Intents, **options: typing.Any) -> None:
+        super().__init__(intents=intents, **options)
+        self.remove_file_name = file_name
+
+    async def on_ready(self):
+        logging.info("Start removing file from server")
+
+        logging.info("Removing from Discord")
+        channel = self.get_channel(1207612400971419688)
+        msg_ids = load_entry(self.remove_file_name)["message_ids"]
+        for msg_number, msg_id in enumerate(msg_ids):
+            logging.info(f"Removing sub-file {msg_number} out of {len(msg_ids)}")
+
+            msg = await channel.fetch_message(msg_id)
+            await msg.delete()
+
+        logging.info("Removing from database")
+        remove_entry(self.remove_file_name)
+
+        logging.info("Done removing")
         await self.close()
