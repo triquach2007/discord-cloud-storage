@@ -1,0 +1,5 @@
+venv/
+.vscode/
+main/download_buffer/
+main/upload_buffer/
+debug.log

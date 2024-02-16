@@ -1,0 +1,4 @@
+CHUCK = 1024 * 1024 * 25
+DB_PATH = "main/db.json"
+TOKEN = "MTIwNzYxMjQ0NzkwOTc0MDU3NQ.Gc61Sd.S9bm8pdcNGJFzk88-jNYStoUfKIyVFCj4eAbYA"
+DOWNLOAD_PATH = "D:\Downloads"
